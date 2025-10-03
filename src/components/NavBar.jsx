@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FaFire } from 'react-icons/fa'
 import CartWidget from './CartWidget'
 
 const NavBar = () => {
@@ -9,7 +10,9 @@ const NavBar = () => {
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="h-16 flex items-center justify-between">
           <a href="#" className="inline-flex items-center gap-2">
-            <span className="text-2xl">🔥</span>
+            <span className="text-2xl text-blue-500">
+              <FaFire />
+            </span>
             <span className="font-bold text-lg tracking-tight">ColdFlame Store</span>
           </a>
 

@@ -6,8 +6,7 @@ const ItemListContainer = ({ greeting }) => {
           {greeting}
         </h1>
         <p className="text-slate-600">
-          Pronto verás aquí el catálogo de productos. Esta caja es nuestro
-          <span className="font-semibold"> ItemListContainer</span>.
+          Pronto verás aquí el catálogo de productos.
         </p>
 
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
