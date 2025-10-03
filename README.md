@@ -1,18 +1,23 @@
-# React + Vite
+# 🛍️ E-commerce React (Entrega 1)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto corresponde a la **primera entrega** de la clase de React.  
+Se construyen los **primeros componentes base** para un e-commerce utilizando **Vite + React + TailwindCSS**.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologías utilizadas
+- [React](https://react.dev/) con Vite
+- [TailwindCSS](https://tailwindcss.com/) para estilos rápidos y responsivos
+- JavaScript ES6+
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📂 Estructura de componentes
+- **NavBar.jsx** → Barra de navegación con logo, enlaces y el widget de carrito.
+- **CartWidget.jsx** → Componente del carrito, renderizado dentro de `NavBar`.
+- **ItemListContainer.jsx** → Contenedor que recibe una **prop** `greeting` para mostrar un mensaje de bienvenida.
 
-## React Compiler
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## ▶️ Cómo correr el proyecto
+```bash
+# Instalar dependencias
+npm install
 
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Ejecutar en entorno de desarrollo
+npm run dev
