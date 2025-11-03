@@ -1,28 +1,66 @@
-const ItemListContainer = ({ greeting }) => {
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { getProducts, getProductsByCategory } from '../utils/api'
+import { categories } from '../data/products'
+import ItemList from './ItemList'
+
+const ItemListContainer = () => {
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const { categoryId } = useParams()
+
+  useEffect(() => {
+    setLoading(true)
+    
+    const fetchProducts = async () => {
+      try {
+        let productsData
+        if (categoryId) {
+          productsData = await getProductsByCategory(categoryId)
+        } else {
+          productsData = await getProducts()
+        }
+        setProducts(productsData)
+      } catch (error) {
+        console.error('Error al cargar productos:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
+  }, [categoryId])
+
+  if (loading) {
+    return (
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600 mb-4"></div>
+              <p className="text-slate-600">Cargando productos...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">
-          {greeting}
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-6">
+          {categoryId 
+            ? `Categoría: ${categories.find(cat => cat.id === categoryId)?.name || categoryId}`
+            : 'Catálogo de Productos'}
         </h1>
-        <p className="text-slate-600">
-          Pronto verás aquí el catálogo de productos.
-        </p>
-
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[1,2,3].map(card => (
-            <div key={card} className="rounded-xl border border-slate-200 p-4 bg-slate-50">
-              <div className="aspect-video rounded-lg bg-white border border-slate-200 grid place-items-center text-slate-400">
-                Imagen
-              </div>
-              <h3 className="mt-3 font-semibold">Producto #{card}</h3>
-              <p className="text-sm text-slate-600">Descripción breve del producto.</p>
-              <button className="mt-3 inline-flex items-center justify-center px-3 py-2 rounded-lg bg-sky-600 text-white text-sm font-medium hover:bg-sky-700">
-                Ver más
-              </button>
-            </div>
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <ItemList products={products} />
+        ) : (
+          <p className="text-slate-600 text-center py-8">
+            No se encontraron productos en esta categoría.
+          </p>
+        )}
       </div>
     </section>
   )

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { NavLink, Link } from 'react-router-dom'
 import { FaFire } from 'react-icons/fa'
 import CartWidget from './CartWidget'
+import { categories } from '../data/products'
 
 const NavBar = () => {
   const [open, setOpen] = useState(false)
@@ -9,19 +11,42 @@ const NavBar = () => {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="h-16 flex items-center justify-between">
-          <a href="#" className="inline-flex items-center gap-2">
+          <Link to="/" className="inline-flex items-center gap-2">
             <span className="text-2xl text-blue-500">
               <FaFire />
             </span>
             <span className="font-bold text-lg tracking-tight">ColdFlame Store</span>
-          </a>
+          </Link>
 
           <ul className="hidden md:flex items-center gap-6 font-medium">
-            <li><a className="hover:text-sky-600 transition-colors" href="#">Inicio</a></li>
-            <li><a className="hover:text-sky-600 transition-colors" href="#">Catálogo</a></li>
-            <li><a className="hover:text-sky-600 transition-colors" href="#">Ofertas</a></li>
-            <li><a className="hover:text-sky-600 transition-colors" href="#">Contacto</a></li>
-            <li><CartWidget quantity={1} /></li>
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `hover:text-sky-600 transition-colors ${
+                    isActive ? 'text-sky-600 font-semibold' : 'text-slate-700'
+                  }`
+                }
+                end
+              >
+                Inicio
+              </NavLink>
+            </li>
+            {categories.map((category) => (
+              <li key={category.id}>
+                <NavLink
+                  to={`/category/${category.id}`}
+                  className={({ isActive }) =>
+                    `hover:text-sky-600 transition-colors ${
+                      isActive ? 'text-sky-600 font-semibold' : 'text-slate-700'
+                    }`
+                  }
+                >
+                  {category.name}
+                </NavLink>
+              </li>
+            ))}
+            <li><CartWidget quantity={0} /></li>
           </ul>
 
           <button
@@ -39,10 +64,35 @@ const NavBar = () => {
         {open && (
           <div className="md:hidden pb-3">
             <ul className="flex flex-col gap-2 font-medium">
-              <li><a className="block px-2 py-2 rounded hover:bg-slate-100" href="#">Inicio</a></li>
-              <li><a className="block px-2 py-2 rounded hover:bg-slate-100" href="#">Catálogo</a></li>
-              <li><a className="block px-2 py-2 rounded hover:bg-slate-100" href="#">Ofertas</a></li>
-              <li><a className="block px-2 py-2 rounded hover:bg-slate-100" href="#">Contacto</a></li>
+              <li>
+                <NavLink
+                  to="/"
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    `block px-2 py-2 rounded hover:bg-slate-100 ${
+                      isActive ? 'bg-slate-100 text-sky-600 font-semibold' : 'text-slate-700'
+                    }`
+                  }
+                  end
+                >
+                  Inicio
+                </NavLink>
+              </li>
+              {categories.map((category) => (
+                <li key={category.id}>
+                  <NavLink
+                    to={`/category/${category.id}`}
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      `block px-2 py-2 rounded hover:bg-slate-100 ${
+                        isActive ? 'bg-slate-100 text-sky-600 font-semibold' : 'text-slate-700'
+                      }`
+                    }
+                  >
+                    {category.name}
+                  </NavLink>
+                </li>
+              ))}
               <li className="px-2 pt-2"><CartWidget quantity={0} /></li>
             </ul>
           </div>
