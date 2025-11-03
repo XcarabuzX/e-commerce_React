@@ -1,4 +1,3 @@
-// Datos de productos para el e-commerce
 export const products = [
   {
     id: 1,
@@ -83,7 +82,6 @@ export const products = [
   }
 ]
 
-// Categorías disponibles
 export const categories = [
   { id: "electronics", name: "Electrónica" },
   { id: "clothing", name: "Ropa" },
