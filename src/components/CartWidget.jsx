@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom'
+
 const CartWidget = ({ quantity = 0 }) => {
   return (
-    <a
-      href="#carrito"
+    <Link
+      to="/carrito"
       className="relative inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 transition-colors"
       title="Ir al carrito"
     >
@@ -18,7 +20,7 @@ const CartWidget = ({ quantity = 0 }) => {
           {quantity}
         </span>
       )}
-    </a>
+    </Link>
   )
 }
 
