@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FaFire } from 'react-icons/fa'
 import CartWidget from './CartWidget'
-import { categories } from '../data/products'
+import { getCategories } from '../utils/api'
 
 const NavBar = () => {
   const [open, setOpen] = useState(false)
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    getCategories().then(setCategories)
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">

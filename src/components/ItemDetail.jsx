@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { categories } from '../data/products'
+import { getCategories } from '../utils/api'
 import ItemCount from './ItemCount'
 
 const ItemDetail = ({ product }) => {
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    getCategories().then(setCategories)
+  }, [])
+
   return (
     <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="rounded-lg bg-slate-100 overflow-hidden">
           <img
-            src={product.image}
+            src={product.imageUrl || product.image}
             alt={product.title}
             className="w-full h-full object-cover"
           />
