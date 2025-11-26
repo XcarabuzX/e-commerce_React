@@ -3,10 +3,14 @@ import { NavLink, Link } from 'react-router-dom'
 import { FaFire } from 'react-icons/fa'
 import CartWidget from './CartWidget'
 import { getCategories } from '../utils/api'
+import { useAuth } from '../context/AuthContext'
+import AuthModal from './Auth/AuthModal'
 
 const NavBar = () => {
   const [open, setOpen] = useState(false)
   const [categories, setCategories] = useState([])
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const { user, signOut } = useAuth()
 
   useEffect(() => {
     getCategories().then(setCategories)
@@ -52,6 +56,28 @@ const NavBar = () => {
               </li>
             ))}
             <li><CartWidget quantity={0} /></li>
+            {user ? (
+              <li className="flex items-center gap-3">
+                <span className="text-sm text-slate-600">
+                  Hola, {user.displayName || user.email}
+                </span>
+                <button
+                  onClick={signOut}
+                  className="px-3 py-2 text-sm border border-slate-300 rounded-lg hover:bg-slate-100"
+                >
+                  Salir
+                </button>
+              </li>
+            ) : (
+              <li>
+                <button
+                  onClick={() => setAuthModalOpen(true)}
+                  className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700"
+                >
+                  Iniciar Sesión
+                </button>
+              </li>
+            )}
           </ul>
 
           <button
@@ -99,10 +125,36 @@ const NavBar = () => {
                 </li>
               ))}
               <li className="px-2 pt-2"><CartWidget quantity={0} /></li>
+              {user ? (
+                <li className="px-2 pt-2">
+                  <div className="flex flex-col gap-2">
+                    <span className="text-sm text-slate-600">
+                      Hola, {user.displayName || user.email}
+                    </span>
+                    <button
+                      onClick={signOut}
+                      className="px-3 py-2 text-sm border border-slate-300 rounded-lg hover:bg-slate-100"
+                    >
+                      Salir
+                    </button>
+                  </div>
+                </li>
+              ) : (
+                <li className="px-2 pt-2">
+                  <button
+                    onClick={() => setAuthModalOpen(true)}
+                    className="w-full px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700"
+                  >
+                    Iniciar Sesión
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         )}
       </nav>
+
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </header>
   )
 }
