@@ -53,7 +53,7 @@ const OrderConfirmation = () => {
   return (
     <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10">
       <div className="bg-white rounded-2xl border border-slate-200 p-8">
-        {/* Encabezado de confirmación */}
+        {/* Encabezado de confirmaciÃ³n */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
@@ -71,7 +71,7 @@ const OrderConfirmation = () => {
             </svg>
           </div>
           <h1 className="text-3xl font-bold text-green-600 mb-2">
-            ¡Compra Confirmada!
+            Â¡Compra Confirmada!
           </h1>
           <p className="text-slate-600">
             Tu orden ha sido procesada exitosamente
@@ -86,7 +86,7 @@ const OrderConfirmation = () => {
           </p>
         </div>
 
-        {/* Información del comprador */}
+        {/* InformaciÃ³n del comprador */}
         <div className="mb-6">
           <h2 className="text-lg font-semibold mb-3">Datos de Contacto</h2>
           <div className="space-y-2 text-sm">
@@ -97,7 +97,7 @@ const OrderConfirmation = () => {
               <span className="font-medium">Email:</span> {order.buyer.email}
             </p>
             <p>
-              <span className="font-medium">Teléfono:</span> {order.buyer.phone}
+              <span className="font-medium">TelÃ©fono:</span> {order.buyer.phone}
             </p>
           </div>
         </div>
@@ -138,7 +138,7 @@ const OrderConfirmation = () => {
         {/* Mensaje adicional */}
         <div className="bg-sky-50 border border-sky-200 rounded-lg p-4 mb-6">
           <p className="text-sm text-sky-900">
-            =ç Recibirás un email de confirmación en {order.buyer.email} con los
+            ðŸ“§ RecibirÃ¡s un email de confirmaciÃ³n en {order.buyer.email} con los
             detalles de tu orden.
           </p>
         </div>

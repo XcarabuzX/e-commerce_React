@@ -27,15 +27,15 @@ const CheckoutForm = () => {
     }
 
     if (!formData.phone.trim()) {
-      newErrors.phone = 'El teléfono es requerido'
+      newErrors.phone = 'El telÃ©fono es requerido'
     } else if (!/^\d{10}$/.test(formData.phone.replace(/\s/g, ''))) {
-      newErrors.phone = 'El teléfono debe tener 10 dígitos'
+      newErrors.phone = 'El telÃ©fono debe tener 10 dÃ­gitos'
     }
 
     if (!formData.email.trim()) {
       newErrors.email = 'El email es requerido'
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'El email no es válido'
+      newErrors.email = 'El email no es vÃ¡lido'
     }
 
     setErrors(newErrors)
@@ -66,7 +66,7 @@ const CheckoutForm = () => {
     }
 
     if (cart.items.length === 0) {
-      toast.error('El carrito está vacío')
+      toast.error('El carrito estÃ¡ vacÃ­o')
       return
     }
 
@@ -79,11 +79,11 @@ const CheckoutForm = () => {
         total: getTotalPrice()
       }
 
-      const order = await createOrder(orderData)
+      const order = await createOrder(orderData, user.uid)
 
       await clearCart()
 
-      toast.success('¡Orden creada exitosamente!')
+      toast.success('Â¡Orden creada exitosamente!')
 
       navigate(`/orden/${order.id}`)
     } catch (error) {
@@ -111,7 +111,7 @@ const CheckoutForm = () => {
             className={`w-full px-3 py-2 border ${
               errors.name ? 'border-red-500' : 'border-slate-300'
             } rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-600`}
-            placeholder="Juan Pérez"
+            placeholder="Juan PÃ©rez"
           />
           {errors.name && (
             <p className="text-red-500 text-xs mt-1">{errors.name}</p>
@@ -120,7 +120,7 @@ const CheckoutForm = () => {
 
         <div>
           <label className="block text-sm font-medium mb-1">
-            Teléfono *
+            TelÃ©fono *
           </label>
           <input
             type="tel"

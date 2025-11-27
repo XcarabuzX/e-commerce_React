@@ -1,11 +1,12 @@
 import { collection, addDoc, doc, getDoc, Timestamp } from 'firebase/firestore'
 import { db } from '../config/firebase'
 
-export const createOrder = async (orderData) => {
+export const createOrder = async (orderData, userId) => {
   try {
     const ordersRef = collection(db, 'orders')
 
     const order = {
+      buyerId: userId,
       buyer: {
         name: orderData.name,
         phone: orderData.phone,
