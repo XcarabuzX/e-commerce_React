@@ -4,8 +4,7 @@ import {
   doc,
   getDoc,
   query,
-  where,
-  orderBy
+  where
 } from 'firebase/firestore'
 import { db } from '../config/firebase'
 
@@ -15,8 +14,7 @@ let categoriesCache = null
 export const getProducts = async () => {
   try {
     const productsRef = collection(db, 'products')
-    const q = query(productsRef, orderBy('createdAt', 'desc'))
-    const snapshot = await getDocs(q)
+    const snapshot = await getDocs(productsRef)
 
     return snapshot.docs.map(doc => ({
       ...doc.data(),
@@ -33,8 +31,7 @@ export const getProductsByCategory = async (categoryId) => {
     const productsRef = collection(db, 'products')
     const q = query(
       productsRef,
-      where('category', '==', categoryId),
-      orderBy('createdAt', 'desc')
+      where('category', '==', categoryId)
     )
     const snapshot = await getDocs(q)
 

@@ -17,6 +17,7 @@ const NavBar = () => {
   }, [])
 
   return (
+    <>
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="h-16 flex items-center justify-between">
@@ -55,7 +56,7 @@ const NavBar = () => {
                 </NavLink>
               </li>
             ))}
-            <li><CartWidget quantity={0} /></li>
+            <li><CartWidget /></li>
             {user ? (
               <li className="flex items-center gap-3">
                 <span className="text-sm text-slate-600">
@@ -124,7 +125,7 @@ const NavBar = () => {
                   </NavLink>
                 </li>
               ))}
-              <li className="px-2 pt-2"><CartWidget quantity={0} /></li>
+              <li className="px-2 pt-2"><CartWidget /></li>
               {user ? (
                 <li className="px-2 pt-2">
                   <div className="flex flex-col gap-2">
@@ -153,9 +154,10 @@ const NavBar = () => {
           </div>
         )}
       </nav>
-
-      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </header>
+
+    <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+    </>
   )
 }
 

@@ -9,10 +9,14 @@ const AuthModal = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
       onClick={onClose}
+      style={{ margin: 0 }}
     >
-      <div onClick={(e) => e.stopPropagation()}>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-md"
+      >
         {isLogin ? (
           <LoginForm
             onToggleForm={() => setIsLogin(false)}
