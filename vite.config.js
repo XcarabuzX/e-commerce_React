@@ -12,5 +12,7 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
-  base: '/',
+  // Para GitHub Pages: usa el nombre del repositorio como base
+  // Para desarrollo local: usa '/'
+  base: process.env.NODE_ENV === 'production' ? '/e-commerce/' : '/',
 })
