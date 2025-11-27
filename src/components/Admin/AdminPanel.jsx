@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { getProducts, deleteProduct, getCategories } from '../../utils/api'
 
 const AdminPanel = () => {
@@ -36,9 +37,9 @@ const AdminPanel = () => {
     try {
       await deleteProduct(productId)
       setProducts(products.filter(p => p.id !== productId))
-      alert('Producto eliminado exitosamente')
+      toast.success('Producto eliminado exitosamente')
     } catch (err) {
-      alert('Error al eliminar el producto')
+      toast.error('Error al eliminar el producto')
     }
   }
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { getCategories, createProduct, updateProduct } from '../../utils/api'
 
 const ProductForm = ({ product = null, onSuccess }) => {
@@ -57,11 +58,11 @@ const ProductForm = ({ product = null, onSuccess }) => {
       if (product) {
         // Modo edición
         await updateProduct(product.id, formData)
-        alert('Producto actualizado exitosamente')
+        toast.success('Producto actualizado exitosamente')
       } else {
         // Modo creación
         await createProduct(formData)
-        alert('Producto creado exitosamente')
+        toast.success('Producto creado exitosamente')
       }
 
       if (onSuccess) {

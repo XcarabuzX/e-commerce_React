@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { useAuth } from '../../context/AuthContext'
 
 const SignupForm = ({ onToggleForm, onClose }) => {
@@ -22,7 +23,9 @@ const SignupForm = ({ onToggleForm, onClose }) => {
 
     try {
       await signUp(email, password, displayName)
-      alert('Registro exitoso. ¡Bienvenido!')
+      toast.success('¡Registro exitoso! Bienvenido a ColdFlame Store', {
+        position: 'top-center'
+      })
       onClose()
     } catch (err) {
       setError(err.code === 'auth/email-already-in-use'

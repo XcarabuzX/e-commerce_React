@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { getCategories } from '../utils/api'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
@@ -17,12 +18,17 @@ const ItemDetail = ({ product }) => {
 
   const handleAddToCart = () => {
     if (!user) {
-      alert('Debes iniciar sesión para agregar productos al carrito')
+      toast.warning('Debes iniciar sesión para agregar productos al carrito', {
+        position: 'top-center'
+      })
       return
     }
 
     addItem(product, quantity)
     setAdded(true)
+    toast.success('¡Producto agregado al carrito!', {
+      position: 'top-center'
+    })
     setTimeout(() => setAdded(false), 2000)
   }
 
