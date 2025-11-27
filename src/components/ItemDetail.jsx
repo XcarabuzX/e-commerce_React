@@ -4,10 +4,10 @@ import { toast } from 'react-toastify'
 import { getCategories } from '../utils/api'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
+import ItemCount from './ItemCount'
 
 const ItemDetail = ({ product }) => {
   const [categories, setCategories] = useState([])
-  const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)
   const { addItem } = useCart()
   const { user } = useAuth()
@@ -16,7 +16,7 @@ const ItemDetail = ({ product }) => {
     getCategories().then(setCategories)
   }, [])
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (quantity) => {
     if (!user) {
       toast.warning('Debes iniciar sesión para agregar productos al carrito', {
         position: 'top-center'
@@ -29,19 +29,6 @@ const ItemDetail = ({ product }) => {
     toast.success('¡Producto agregado al carrito!', {
       position: 'top-center'
     })
-    setTimeout(() => setAdded(false), 2000)
-  }
-
-  const incrementQuantity = () => {
-    if (quantity < product.stock) {
-      setQuantity(quantity + 1)
-    }
-  }
-
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1)
-    }
   }
 
   return (
@@ -74,40 +61,32 @@ const ItemDetail = ({ product }) => {
           </div>
 
           <div className="mb-4">
-            <p className="text-sm font-medium mb-2">Cantidad:</p>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={decrementQuantity}
-                className="px-3 py-1 border border-slate-300 rounded-lg hover:bg-slate-100"
-                disabled={quantity <= 1}
-              >
-                -
-              </button>
-              <span className="px-4 font-semibold">{quantity}</span>
-              <button
-                onClick={incrementQuantity}
-                className="px-3 py-1 border border-slate-300 rounded-lg hover:bg-slate-100"
-                disabled={quantity >= product.stock}
-              >
-                +
-              </button>
-              <span className="text-sm text-slate-500">
-                ({product.stock} disponibles)
-              </span>
-            </div>
+            {!added ? (
+              <>
+                <p className="text-sm font-medium mb-2">Cantidad:</p>
+                <ItemCount
+                  stock={product.stock}
+                  initial={1}
+                  onAdd={handleAddToCart}
+                />
+              </>
+            ) : (
+              <div className="flex flex-col gap-3">
+                <Link
+                  to="/carrito"
+                  className="w-full py-3 bg-sky-600 text-white rounded-lg hover:bg-sky-700 font-semibold text-center transition-colors"
+                >
+                  Ir al Carrito
+                </Link>
+                <button
+                  onClick={() => setAdded(false)}
+                  className="w-full py-3 border-2 border-sky-600 text-sky-600 rounded-lg hover:bg-sky-50 font-semibold transition-colors"
+                >
+                  Seguir Comprando
+                </button>
+              </div>
+            )}
           </div>
-
-          <button
-            onClick={handleAddToCart}
-            disabled={added}
-            className={`w-full py-3 rounded-lg font-semibold transition-colors ${
-              added
-                ? 'bg-green-600 text-white'
-                : 'bg-sky-600 text-white hover:bg-sky-700'
-            }`}
-          >
-            {added ? '¡Agregado al carrito!' : 'Agregar al Carrito'}
-          </button>
 
           <Link
             to="/"
