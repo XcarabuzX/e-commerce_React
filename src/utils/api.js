@@ -3,6 +3,9 @@ import {
   getDocs,
   doc,
   getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
   query,
   where
 } from 'firebase/firestore'
@@ -82,5 +85,58 @@ export const getCategories = async () => {
   } catch (error) {
     console.error('Error fetching categories:', error)
     throw new Error('No se pudieron cargar las categorías')
+  }
+}
+
+// CRUD operations for admin
+export const createProduct = async (productData) => {
+  try {
+    const productsRef = collection(db, 'products')
+    const newProduct = {
+      ...productData,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+
+    const docRef = await addDoc(productsRef, newProduct)
+
+    return {
+      ...newProduct,
+      id: docRef.id
+    }
+  } catch (error) {
+    console.error('Error creating product:', error)
+    throw new Error('No se pudo crear el producto')
+  }
+}
+
+export const updateProduct = async (productId, productData) => {
+  try {
+    const productRef = doc(db, 'products', productId)
+    const updatedData = {
+      ...productData,
+      updatedAt: new Date()
+    }
+
+    await updateDoc(productRef, updatedData)
+
+    return {
+      ...updatedData,
+      id: productId
+    }
+  } catch (error) {
+    console.error('Error updating product:', error)
+    throw new Error('No se pudo actualizar el producto')
+  }
+}
+
+export const deleteProduct = async (productId) => {
+  try {
+    const productRef = doc(db, 'products', productId)
+    await deleteDoc(productRef)
+    return { success: true }
+  } catch (error) {
+    console.error('Error deleting product:', error)
+    throw new Error('No se pudo eliminar el producto')
   }
 }

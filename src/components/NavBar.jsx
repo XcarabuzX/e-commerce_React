@@ -10,7 +10,7 @@ const NavBar = () => {
   const [open, setOpen] = useState(false)
   const [categories, setCategories] = useState([])
   const [authModalOpen, setAuthModalOpen] = useState(false)
-  const { user, signOut } = useAuth()
+  const { user, signOut, isAdmin } = useAuth()
 
   useEffect(() => {
     getCategories().then(setCategories)
@@ -57,6 +57,20 @@ const NavBar = () => {
               </li>
             ))}
             <li><CartWidget /></li>
+            {isAdmin && (
+              <li>
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    `hover:text-sky-600 transition-colors ${
+                      isActive ? 'text-sky-600 font-semibold' : 'text-slate-700'
+                    }`
+                  }
+                >
+                  Admin
+                </NavLink>
+              </li>
+            )}
             {user ? (
               <li className="flex items-center gap-3">
                 <span className="text-sm text-slate-600">
@@ -126,6 +140,21 @@ const NavBar = () => {
                 </li>
               ))}
               <li className="px-2 pt-2"><CartWidget /></li>
+              {isAdmin && (
+                <li>
+                  <NavLink
+                    to="/admin"
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      `block px-2 py-2 rounded hover:bg-slate-100 ${
+                        isActive ? 'bg-slate-100 text-sky-600 font-semibold' : 'text-slate-700'
+                      }`
+                    }
+                  >
+                    Admin
+                  </NavLink>
+                </li>
+              )}
               {user ? (
                 <li className="px-2 pt-2">
                   <div className="flex flex-col gap-2">
