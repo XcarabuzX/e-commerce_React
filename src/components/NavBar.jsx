@@ -1,13 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FaFire } from 'react-icons/fa'
 import CartWidget from './CartWidget'
-import { categories } from '../data/products'
+import { getCategories } from '../utils/api'
+import { useAuth } from '../context/AuthContext'
+import AuthModal from './Auth/AuthModal'
 
 const NavBar = () => {
   const [open, setOpen] = useState(false)
+  const [categories, setCategories] = useState([])
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const { user, signOut, isAdmin } = useAuth()
+
+  useEffect(() => {
+    getCategories().then(setCategories)
+  }, [])
 
   return (
+    <>
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="h-16 flex items-center justify-between">
@@ -46,7 +56,43 @@ const NavBar = () => {
                 </NavLink>
               </li>
             ))}
-            <li><CartWidget quantity={0} /></li>
+            <li><CartWidget /></li>
+            {isAdmin && (
+              <li>
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    `hover:text-sky-600 transition-colors ${
+                      isActive ? 'text-sky-600 font-semibold' : 'text-slate-700'
+                    }`
+                  }
+                >
+                  Admin
+                </NavLink>
+              </li>
+            )}
+            {user ? (
+              <li className="flex items-center gap-3">
+                <span className="text-sm text-slate-600">
+                  Hola, {user.displayName || user.email}
+                </span>
+                <button
+                  onClick={signOut}
+                  className="px-3 py-2 text-sm border border-slate-300 rounded-lg hover:bg-slate-100"
+                >
+                  Salir
+                </button>
+              </li>
+            ) : (
+              <li>
+                <button
+                  onClick={() => setAuthModalOpen(true)}
+                  className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700"
+                >
+                  Iniciar Sesión
+                </button>
+              </li>
+            )}
           </ul>
 
           <button
@@ -93,12 +139,54 @@ const NavBar = () => {
                   </NavLink>
                 </li>
               ))}
-              <li className="px-2 pt-2"><CartWidget quantity={0} /></li>
+              <li className="px-2 pt-2"><CartWidget /></li>
+              {isAdmin && (
+                <li>
+                  <NavLink
+                    to="/admin"
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      `block px-2 py-2 rounded hover:bg-slate-100 ${
+                        isActive ? 'bg-slate-100 text-sky-600 font-semibold' : 'text-slate-700'
+                      }`
+                    }
+                  >
+                    Admin
+                  </NavLink>
+                </li>
+              )}
+              {user ? (
+                <li className="px-2 pt-2">
+                  <div className="flex flex-col gap-2">
+                    <span className="text-sm text-slate-600">
+                      Hola, {user.displayName || user.email}
+                    </span>
+                    <button
+                      onClick={signOut}
+                      className="px-3 py-2 text-sm border border-slate-300 rounded-lg hover:bg-slate-100"
+                    >
+                      Salir
+                    </button>
+                  </div>
+                </li>
+              ) : (
+                <li className="px-2 pt-2">
+                  <button
+                    onClick={() => setAuthModalOpen(true)}
+                    className="w-full px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700"
+                  >
+                    Iniciar Sesión
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         )}
       </nav>
     </header>
+
+    <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+    </>
   )
 }
 

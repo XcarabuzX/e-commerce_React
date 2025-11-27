@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProducts, getProductsByCategory } from '../utils/api'
-import { categories } from '../data/products'
+import { getProducts, getProductsByCategory, getCategories } from '../utils/api'
 import ItemList from './ItemList'
 
 const ItemListContainer = () => {
   const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const { categoryId } = useParams()
 
   useEffect(() => {
+    getCategories().then(setCategories)
+  }, [])
+
+  useEffect(() => {
     setLoading(true)
-    
+
     const fetchProducts = async () => {
       try {
         let productsData

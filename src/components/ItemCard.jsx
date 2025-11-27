@@ -6,7 +6,7 @@ const ItemCard = ({ product }) => {
     <div className="rounded-xl border border-slate-200 p-4 bg-white hover:shadow-lg transition-shadow">
       <div className="aspect-video rounded-lg bg-slate-100 mb-4 overflow-hidden">
         <img
-          src={product.image}
+          src={product.imageUrl || product.image}
           alt={product.title}
           className="w-full h-full object-cover"
         />

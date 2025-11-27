@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom'
+import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
 
-const CartWidget = ({ quantity = 0 }) => {
+const CartWidget = () => {
+  const { getTotalQuantity } = useCart()
+  const { user } = useAuth()
+  const quantity = user ? getTotalQuantity() : 0
+
   return (
     <Link
       to="/carrito"
