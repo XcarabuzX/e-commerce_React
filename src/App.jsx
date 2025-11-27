@@ -6,6 +6,7 @@ import NavBar from './components/NavBar'
 import ItemListContainer from './components/ItemListContainer'
 import ItemDetailContainer from './components/ItemDetailContainer'
 import CartPage from './components/Cart/CartPage'
+import OrderConfirmation from './components/Checkout/OrderConfirmation'
 import NotFound from './components/NotFound'
 import AdminRoute from './components/Admin/AdminRoute'
 import AdminPanel from './components/Admin/AdminPanel'
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/category/:categoryId" element={<ItemListContainer />} />
           <Route path="/item/:id" element={<ItemDetailContainer />} />
           <Route path="/carrito" element={<CartPage />} />
+          <Route path="/orden/:orderId" element={<OrderConfirmation />} />
 
           {/* Rutas protegidas de administración */}
           <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
